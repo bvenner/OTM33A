@@ -4,8 +4,8 @@
 \alias{run.fits}
 \title{run batch files for a data set}
 \usage{
-run.fits(dat, Analyte = "CH4", wdfilt = 60, binwidth = 10,
-  min.n = 0)
+run.fits(db, analyte = "CH4", wdfilt = 60, binwidth = 10,
+  min.n = 0.02)
 }
 \arguments{
 \item{dat:}{Data table, with names obtained from GMAP data output as of 2018-Aug}

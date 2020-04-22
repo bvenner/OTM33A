@@ -4,7 +4,7 @@
 \alias{calcEmissionsRate}
 \title{Calculate emissions rate for Analyte from data.table}
 \usage{
-calcEmissionsRate(dat, Analyte = "CH4")
+calcEmissionsRate(dat, analyte = "CH4")
 }
 \arguments{
 \item{dat:}{Data table, with names obtained from GMAP data output as of 2018-Aug}

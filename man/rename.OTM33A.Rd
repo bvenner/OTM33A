@@ -2,7 +2,7 @@
 % Please edit documentation in R/rename-OTM33A.R
 \name{rename.OTM33A}
 \alias{rename.OTM33A}
-\title{Rename data columns from read.OTM33A for subsequent processing}
+\title{Melt and rename data columns from read.OTM33A for subsequent processing}
 \usage{
 rename.OTM33A(dat)
 }
@@ -10,7 +10,7 @@ rename.OTM33A(dat)
 \item{dat}{Data table}
 }
 \description{
-Rename data columns from read.OTM33A for subsequent processing
+Melt and rename data columns from read.OTM33A for subsequent processing
 }
 \examples{
 dat=rename.OTM33A(dat)

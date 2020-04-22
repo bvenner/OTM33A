@@ -4,7 +4,7 @@
 \alias{calcPSG.bin}
 \title{Calculate plume direction and spread using binned data and natural scale}
 \usage{
-calcPSG.bin(dat, Analyte = "CH4", binwidth = 2, wdfilt = 180,
+calcPSG.bin(dat, analyte = "CH4", binwidth = 2, wdfilt = 180,
   min.n = 0, plot = TRUE)
 }
 \arguments{

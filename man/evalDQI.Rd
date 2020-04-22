@@ -5,7 +5,7 @@
 \title{Caculate DQI values from post-emissions-calc data set and DQI statistics from calcDQI.
 DQI values are documented in Appendix D to Appendix F1 of OTM 33A, v 1.3, p 53 to 59}
 \usage{
-evalDQI(x, stats)
+evalDQI(arg)
 }
 \arguments{
 \item{dat:}{Data table, after running emissions estimate calcs

@@ -4,7 +4,7 @@
 \alias{subtract.background}
 \title{Calculate background as the average of the lowest five percent of data from data set}
 \usage{
-subtract.background(dat, Analyte = "CH4")
+subtract.background(dat, analyte = "CH4")
 }
 \arguments{
 \item{dat:}{Data table, with names obtained from GMAP data output as of 2018-Aug}

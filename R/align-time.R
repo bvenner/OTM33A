@@ -1,4 +1,5 @@
 #' Align sonic anenometer and concentration measurements in time by offsetting concentration measurements by a fixed delay, in seconds
+#' This function will need to be rewritten to work with other analytes besides CH4
 #' @param
 #' dat:  Data table, with names obtained from GMAP data output as of 2018-Aug
 #'
@@ -10,7 +11,7 @@
 #' align.time(dat, 40) # 40 second time delay
 
 align.time <- function(dat, delay) {
-  if(!is.null(attr(dat,"align.time"))) {
+  if(is.null(attr(dat,"align.time"))) {
     dat[,row.id := 1:.N]
     mintime <- dat[1,DateTime]+delay
     dat.delay = dat[DateTime > mintime, list(row.id,CH4)]
@@ -18,8 +19,7 @@ align.time <- function(dat, delay) {
     setnames(dat,"CH4","CH4.nta")
     setkey(dat.delay,row.id)
     setkey(dat,row.id)
-    dat[dat.delay,CH4:=i.CH4]
-    dat[, sub := ifelse(row.id<1,FALSE,sub)]
+    dat[, sub := ifelse(row.id<1,FALSE,TRUE)]
     dat[, sub := ifelse(is.na(CH4),FALSE,sub)]
     setattr(dat,"align.time",delay)
   }

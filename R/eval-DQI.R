@@ -18,9 +18,9 @@ evalDQI <- function(arg) {
   # Count.DQI.2, IF(BQ3>=3*AG3,"",3), Count.QA >= 3*5%.N
   Count.DQI.2 = ifelse(x$QA.count >= 3*x$N.5.percent,0,3),
   # Wind.DQI.1,	IF(AVERAGE(AT3:AU3) >30,1,""), mean(Std.WD.2D,Std.WD.3D)>30
-  Wind.DQI.1 = ifelse(mean(x$sd.WD.2D,x$sd.WD.3D)>30,1,0),
+  Wind.DQI.1 = ifelse(mean(c(x$wd2.sd,x$wd3.sd))>30,1,0),
   #Wind.DQI.2,	IF(ABS((AT3-AU3)/AVERAGE(AT3:AU3))*100<50,"",1), abs(Std.WD.2D-Std.WD.3D)/mean(Std.WD.2D,Std.WD.3D)*100<50
-  Wind.DQI.2 = ifelse(abs(x$sd.WD.2D-x$sd.WD.3D)/mean(x$sd.WD.2D,x$sd.WD.3D)<.5,0,1),
+  Wind.DQI.2 = ifelse(abs(x$wd2.sd-x$wd3.sd)/mean(c(x$wd2.sd,x$wd3.sd))<.5,0,1),
   #Turb.WS.Int.DQI.1, IF(AND(AV3>0.22,CW3=""),3,""), Turbulent.Intensity>.22
   Turb.WS.Int.DQI.1 = ifelse(x$turbint>.22 & x$ws3.mn > 1.5, 3,0),
   #WS.DQI.1,	IF(AP3<1.5,1,""), 3DS.2D.Wind.Speed < 1.5
@@ -52,13 +52,13 @@ evalDQI <- function(arg) {
   #CH4.Low.DQI.4, IF(BK3<=0.1, IF(G3<=50,10,IF(AND(G3>50,G3<=100),5,IF(AND(G3>100,G3<=150),3,IF(G3>150,1)))),""), a1 & distance
   CH4.Low.DQI.4 = ifelse(x$a1 <= .1, if( x$distance <=50) 10 else if(abs(x$distance-75) < 25) 5 else if(abs(x$distance-125) < 25) 3 else 1, 0),
   #Sig.y.DQI, IF((BD3/BN3)>=1.2,1,""), PG.sigma.y/sigma.y >= 1.2
-  Sig.y.DQI = ifelse(x$pgsigmay/x$sigma > 1.2, 1, 0),
+  Sig.y.DQI = ifelse(x$pgsigmay/x$Ly.sigma > 1.2, 1, 0),
   #PSG.bLs.High.DQI, IF(BY3/CG3>=2,1,""), PSG.Emission.Estimate/A1.bLs >= 2.1
   #PSG.bLs.Low.DQI, IF(BY3/CG3<=0.5,1,""), PSG.Emission.Estimate/A1.bLs < 0.5
   #PSG.Sigy.High.DQI, IF(BY3/BZ3>=2,1,""), PSG.Emission.Estimate/Sig.y.Emission.Estimate > 2
-  PSG.Sigy.High.DQI = ifelse(2*x$pgsigmay*x$pgsigmaz/x$sigma^2>2,1,0),
+  PSG.Sigy.High.DQI = ifelse(2*x$pgsigmay*x$pgsigmaz/x$Ly.sigma^2>2,1,0),
   #PSG.Sigy.Low.DQI, IF(BY3/BZ3<=0.5,1,""), PSG.Emission.Estimate/Sig.y.Emission.Estimate < 0.5
-  PSG.Sigy.Low.DQI = ifelse(2*x$pgsigmay*x$pgsigmaz/x$sigma^2<0.5,1,0),
+  PSG.Sigy.Low.DQI = ifelse(2*x$pgsigmay*x$pgsigmaz/x$Ly.sigma^2<0.5,1,0),
   #Dist.DQI, IF(AND(G4>=25, G4<=150),"",1), Distance >= 25 & Distance < 150
   Dist.DQI = ifelse(x$distance >= 25 & x$distance < 150, 0, 1),
   #GPS.DQI, IF(AND(AB3<=0.000002, AD3<=0.000002),"",1), GPS.Latitude.StdDev < 0.000002 & GPS.Longitude.StdDev < 0.000002
@@ -70,7 +70,7 @@ evalDQI <- function(arg) {
   #Temp.Comp.DQI, IF(ABS((1-BR3)*100)<=1,"",1), abs(1-Temp.QA)*100 < 1
   Temp.Comp.DQI = ifelse(abs(1-x$temp.ratio) < 0.01, 0, 1),
   #3Dtemp.StdDev.DQI, IF(BS3<=1.1,"",1), 3Dtemp.stdev.QA < 1.1
-  Temp3D.StdDev.DQI = ifelse(x$temp.sd<1.1,0,1)
+  Temp.SD.DQI = ifelse(x$temp.sd<1.1,0,1)
   )
   dat.attr
 }

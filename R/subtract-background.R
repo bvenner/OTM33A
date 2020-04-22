@@ -6,14 +6,12 @@
 #' @examples
 #' subtract.background(dat)
 
-subtract.background <- function(dat,Analyte="CH4") {
-  bg.name = paste(Analyte,".bg",sep="")
+subtract.background <- function(dat,analyte="CH4") {
+  bg.name = paste(analyte,".bg",sep="")
   if(is.null(attr(dat,bg.name))) {
-    setnames(dat,Analyte,"Analyte")
-    bg <- dat[Analyte<quantile(Analyte,probs=.05)&sub==TRUE,mean(Analyte)]
-    dat[sub==TRUE,Analyte := Analyte - bg]
+    bg <- dat[Analyte<quantile(Analyte,probs=.05),mean(Analyte)]
+    dat[,Analyte := Analyte - bg]
     setattr(dat,bg.name,bg)
-    setnames(dat,"Analyte",Analyte)
   }
-  dat
+  return(dat)
 }

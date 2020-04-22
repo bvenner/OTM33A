@@ -8,12 +8,14 @@
 #' @examples
 #' run.fits(dat)
 
-run.fits <- function(dat,Analyte="CH4",wdfilt=60,binwidth=10,min.n=0) {
+run.fits <- function(db,analyte="CH4",wdfilt=60,binwidth=10,min.n=0.02) {
   tryCatch({
-  dat <-  calcPSG.bin(dat,Analyte=Analyte,wdfilt=wdfilt,binwidth=binwidth,min.n=min.n)
-  dat <- calcLyProjection.bin(dat,Analyte=Analyte,thetafilt=wdfilt,binwidth=binwidth,min.n=min.n)
-  dat <- calcPlume(dat)
-  dat <- calcEmissionsRate(dat,Analyte=Analyte)
+    dat <- cast.db(db,analyte=analyte)
+    dat <- subtract.background(dat,analyte=analyte)
+    dat <-  calcPSG.bin(dat,analyte=analyte,wdfilt=wdfilt,binwidth=binwidth,min.n=min.n)
+    dat <- calcLyProjection.bin(dat,analyte=analyte,thetafilt=wdfilt,binwidth=binwidth,min.n=min.n)
+    dat <- calcPlume(dat)
+    dat <- calcEmissionsRate(dat,analyte=analyte)
 #  retval=fetch.results(dat)
   return(dat)})
 }

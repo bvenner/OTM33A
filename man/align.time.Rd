@@ -2,7 +2,8 @@
 % Please edit documentation in R/align-time.R
 \name{align.time}
 \alias{align.time}
-\title{Align sonic anenometer and concentration measurements in time by offsetting concentration measurements by a fixed delay, in seconds}
+\title{Align sonic anenometer and concentration measurements in time by offsetting concentration measurements by a fixed delay, in seconds
+This function will need to be rewritten to work with other analytes besides CH4}
 \usage{
 align.time(dat, delay)
 }
@@ -17,6 +18,7 @@ None, but has the side effect of adding column CH4.nta (not time aligned) to dat
 }
 \description{
 Align sonic anenometer and concentration measurements in time by offsetting concentration measurements by a fixed delay, in seconds
+This function will need to be rewritten to work with other analytes besides CH4
 }
 \examples{
 align.time(dat, 40) # 40 second time delay

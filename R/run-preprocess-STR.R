@@ -6,11 +6,11 @@
 #'
 #' @export
 #' @examples
-#' dat <- run.preprocess(dat)
+#' dat <- run.preprocess.STR(dat)
 
-run.preprocess <- function(dat) {
-  dat <- rename.OTM33A(dat)
-  dat <- align.time(dat,4)
+run.preprocess.STR <- function(dat) {
+  # dat <- rename.STR(dat)
+  dat <- align.time(dat,40)
   dat <- rotateWindDirection(dat)
   return(dat)
 }

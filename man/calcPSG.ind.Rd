@@ -4,7 +4,7 @@
 \alias{calcPSG.ind}
 \title{Calculate plume direction and spread using indiviudal data on the natural scale}
 \usage{
-calcPSG.ind(dat, plot = TRUE)
+calcPSG.ind(db, analyte = "CH4", plot = TRUE)
 }
 \arguments{
 \item{dat}{Data table, with names obtained from GMAP data output as of 2018-Aug}

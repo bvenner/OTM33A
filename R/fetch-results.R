@@ -6,16 +6,8 @@
 #' @examples
 #' fetch.results(dat)
 fetch.results <- function(dat) {
-  x <- NULL
-  try(x <- round(c(PSG=attr(dat,"PSG"),
-           PGI=trunc(attr(dat,"PGI")),
-           Ubar = attr(dat,"Ubar"),
-           distance=attr(dat,"distance"),
-           CH4.bg=attr(dat,"CH4.bg"),
-           wd.rot=as.numeric(attr(dat,"wd.rot")),
-           Ly.rot =as.numeric(attr(dat,"Ly.rot")),
-           Ly.peak = as.numeric(attr(dat,"Ly.peak"))),2))
-  x=as.list(x)
-  x$ID=attr(dat,"file.name")
-  return(x)
+  try(y <- round(c(PSG=attr(dat,"CH4.PSG"),
+           wd.rot=as.numeric(attr(dat,"CH4.wd.rot")),
+           Ly.peak = as.numeric(attr(dat,"CH4.Ly.peak"))),2))
+  return(y)
 }

@@ -1,6 +1,6 @@
 #' Calculate plume characteristics from data.table
 #' @param
-#' dat: Data table, with names obtained from GMAP data output as of 2018-Aug
+#' dat: Analyte-specific Data table
 #'
 #' @return data.table with attributes set containing plume calculations
 #' @export
@@ -8,12 +8,16 @@
 #' dat = calcPlume(dat)
 
 calcPlume <- function(dat) {
-  # Input:  dat:  data set
+  thetafilt <- attr(dat,"CH4.thetafilt")
+  rotation <- attr(dat,"CH4.wd.rot")
+  dist.int <- round(attr(dat,"distance"))
+  dat[,mysub :=abs(wd3-rotation) < thetafilt]
+  # Input:  db:  data set
   # Output:  calculated plume characteristics
 
   # Constants from Gryning et al 1983
 
-  # next statement imports psigma, turbint.breaks,wdsd.breaks
+  # next statement imports psigma, turbint.breaks, wdsd.breaks
   data("pgsigma")
 
 #  pgsigma=get(z[1])
@@ -21,14 +25,14 @@ calcPlume <- function(dat) {
 #  wdsd.breaks=get(z[3])
 
   # the following names depend upon renaming (i.e. rename.OTM33A)
-  Tbar <- dat[sub==TRUE & theta.filter==TRUE,mean(Temp)]+273.15
-  Pbar <- dat[sub==TRUE & theta.filter==TRUE,mean(Pressure)]
-  Ubar <- dat[sub==TRUE & theta.filter==TRUE,mean(ws3)]
-  ws.sd <- dat[sub==TRUE & theta.filter==TRUE,sd(ws3)]
+  Tbar <- dat[mysub==TRUE,mean(Temp)]+273.15
+  Pbar <- dat[mysub==TRUE,mean(Pressure)]
+  Ubar <- dat[mysub==TRUE,mean(ws3)]
+  ws3.sd <- dat[mysub==TRUE,sd(ws3)]
 
-  wd3.sd <- dat[sub==TRUE & theta.filter==TRUE,sd.wd.yam(wd3)]
-  wd2.sd <- dat[sub==TRUE & theta.filter==TRUE,sd.wd.yam(wd2)]
-  turbint <- dat[sub==TRUE&theta.filter==TRUE,sd(ws3w)]/Ubar
+  wd3.sd <- dat[mysub==TRUE,sd.wd.yam(wd3)]
+  wd2.sd <- dat[mysub==TRUE,sd.wd.yam(wd2)]
+  turbint <- dat[mysub==TRUE,sd(ws3w)]/Ubar
 
   # PGI from turbulence, turbint.breaks imported from data(pgsigma)
   PGturbi <- as.numeric(as.character((cut(turbint, turbint.breaks, labels=rev(seq(1,7,1))))))
@@ -37,7 +41,6 @@ calcPlume <- function(dat) {
   PG.sd.2 <- as.numeric(as.character(cut(wd2.sd, wdsd.breaks, labels=rev(seq(1,7,1)))))
   # Calculate average PGI, round up if 0.5
   PGI <- round((PG.sd.3 + PGturbi)/2 + 0.0001)
-  dist.int <- round(attr(dat,"distance"))
   # pgsigma imported from pgsigma.Rdata
   pgsigmay <- as.numeric(pgsigma[which(pgsigma$dist.int == dist.int &
                                         pgsigma$PGI == PGI), "sigmay"])
@@ -46,14 +49,14 @@ calcPlume <- function(dat) {
 
   setattr(dat,"PGI",as.numeric(PGI))
   setattr(dat,"PG.sd.3",as.numeric(PG.sd.3))
-  setattr(dat,"PG.sd,2",as.numeric(PG.sd.2))
-  setattr(dat,"PG.t",as.numeric(PGturbi))
+  setattr(dat,"PG.sd.2",as.numeric(PG.sd.2))
+  setattr(dat,"PG.ti",as.numeric(PGturbi))
   setattr(dat,"Ubar",as.numeric(Ubar))
   setattr(dat,"Pbar",as.numeric(Pbar))
   setattr(dat,"Tbar",as.numeric(Tbar))
   setattr(dat,"turbint",as.numeric(turbint))
   setattr(dat,"pgsigmay",as.numeric(pgsigmay))
   setattr(dat,"pgsigmaz",as.numeric(pgsigmaz))
-  setattr(dat,"PG.ti",as.numeric(PGturbi))
+#  setattr(db,"PG.ti",as.numeric(PGturbi))
   return(dat)
 }

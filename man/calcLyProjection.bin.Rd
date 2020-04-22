@@ -4,7 +4,7 @@
 \alias{calcLyProjection.bin}
 \title{Calculate plume direction and spread using binned data and natural scale}
 \usage{
-calcLyProjection.bin(dat, Analyte = "CH4", thetafilt = 90,
+calcLyProjection.bin(dat, analyte = "CH4", thetafilt = 90,
   binwidth = 2, min.n = 0, plot = TRUE)
 }
 \arguments{

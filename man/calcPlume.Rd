@@ -7,7 +7,7 @@
 calcPlume(dat)
 }
 \arguments{
-\item{dat:}{Data table, with names obtained from GMAP data output as of 2018-Aug}
+\item{dat:}{Analyte-specific Data table}
 }
 \value{
 data.table with attributes set containing plume calculations
