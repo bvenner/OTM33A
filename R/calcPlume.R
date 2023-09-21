@@ -46,7 +46,7 @@ calcPlume <- function(dat) {
 
   setattr(dat,"PGI",as.numeric(PGI))
   setattr(dat,"PG.sd.3",as.numeric(PG.sd.3))
-  setattr(dat,"PG.sd,2",as.numeric(PG.sd.2))
+  setattr(dat,"PG.sd.2",as.numeric(PG.sd.2))
   setattr(dat,"PG.t",as.numeric(PGturbi))
   setattr(dat,"Ubar",as.numeric(Ubar))
   setattr(dat,"Pbar",as.numeric(Pbar))

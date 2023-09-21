@@ -14,7 +14,9 @@ calcEmissionsRate <- function(dat,Analyte="CH4") {
   Tbar = attr(dat,"Tbar")
   pgsigmay = attr(dat,"pgsigmay")
   pgsigmaz = attr(dat,"pgsigmaz")
-  rt1rp1 <- 298/1013.25; gasconst <- 8.314510; mw <- 16.04;
+  mw_table=data.table(data.frame(Compound=c("CH4","H2S"),MW=c(16.04,34.1)))
+  mw = mw_table[Compound==Analyte,MW]
+  rt1rp1 <- 298/1013.25; gasconst <- 8.314510;
   rt0rp0 <- (gasconst*298)/101.325; opt <- (1e-06 * mw*1000)/rt0rp0;
   # Convert Ly.peak to g/m3
   Ly.peak=attr(dat,paste(Analyte,"Ly.peak",sep="."))

@@ -10,7 +10,7 @@
 
 run.preprocess <- function(dat) {
   dat <- subtract.background(dat)
-  dat <- align.time(dat,4)
+  dat <- align.time(dat,3)
   dat <- rotateWindDirection(dat)
   return(dat)
 }
